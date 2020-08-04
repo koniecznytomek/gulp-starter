@@ -3,4 +3,8 @@
 
 `gulp`
 
+### Build app
+
+`gulp build`
+
 
