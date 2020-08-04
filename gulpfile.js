@@ -5,6 +5,8 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
+const htmlValidator = require('gulp-w3c-html-validator');
+const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const postcss = require('gulp-postcss');
@@ -41,10 +43,29 @@ function scssTask(done) {
     done();
 }
 
-/* Build Tasks */
+/* LINTERS */
+
+function jsLinter(done) {
+    return (
+        src(files.jsPath)
+            .pipe(eslint())
+            // eslint.format() outputs the lint results to the console.
+            // Alternatively use eslint.formatEach() (see Docs).
+            .pipe(eslint.format())
+            // To have the process exit with an error code (1) on
+            // lint error, return the stream and pipe to failAfterError last.
+            .pipe(eslint.failAfterError())
+    );
+
+    done();
+}
+
+/* BUILD TASKS */
 
 function htmlBuild(done) {
     return src(`${paths.source}/*.html`)
+        .pipe(htmlValidator())
+        .pipe(htmlValidator.reporter())
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(dest(paths.build));
     done();
@@ -80,6 +101,8 @@ function fontsBuild(done) {
     done();
 }
 
+/* RELOAD AND WATCH*/
+
 function reload(done) {
     server.reload();
     done();
@@ -97,7 +120,7 @@ function serve(done) {
 function watchTask() {
     watch(
         [files.scssPath, files.htmlPath, files.jsPath, files.imgPath],
-        series(parallel(scssTask, reload))
+        series(parallel(scssTask, jsLinter, reload))
     );
 }
 

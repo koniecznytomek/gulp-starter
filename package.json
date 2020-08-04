@@ -1,31 +1,33 @@
 {
-  "name": "vanilla-gulp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "tomek",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
-    "autoprefixer": "^9.8.6",
-    "babelify": "^10.0.0",
-    "browser-sync": "^2.26.12",
-    "browserify": "^16.5.2",
-    "cssnano": "^4.1.10",
-    "gulp": "^4.0.2",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "dependencies": {
-    "gulp-rename": "^2.0.0"
-  }
+    "name": "vanilla-gulp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "tomek",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/core": "^7.11.0",
+        "@babel/preset-env": "^7.11.0",
+        "autoprefixer": "^9.8.6",
+        "babelify": "^10.0.0",
+        "browser-sync": "^2.26.12",
+        "browserify": "^16.5.2",
+        "cssnano": "^4.1.10",
+        "gulp": "^4.0.2",
+        "gulp-eslint": "^6.0.0",
+        "gulp-html": "^3.2.0",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-postcss": "^8.0.0",
+        "gulp-rename": "^2.0.0",
+        "gulp-sass": "^4.1.0",
+        "gulp-sourcemaps": "^2.6.5",
+        "gulp-uglify": "^3.0.2",
+        "gulp-w3c-html-validator": "^2.0.1",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0"
+    },
+    "dependencies": {}
 }
