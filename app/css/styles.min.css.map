@@ -1,0 +1,1 @@
+{"version":3,"sources":["_layout.scss","styles.min.css","styles.scss"],"names":[],"mappings":"AAAA,KACE,eCCF,CCAA,SACI,UDGJ","file":"styles.min.css","sourcesContent":["body {\n  background: #fff;\n}\n","body {\n  background: #fff;\n}\n\n.testing {\n  color: #fff;\n}\n","@import 'layout';\n\n.testing {\n    color: #fff;\n}\n"]}
