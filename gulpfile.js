@@ -14,19 +14,24 @@ const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
+const ts = require('gulp-typescript');
 
 const server = browserSync;
+const tsProject = ts.createProject('tsconfig.json');
 
 const paths = {
     source: './app',
     build: './build',
     images: './app/images',
     fonts: './app/fonts',
+    js: './app/js',
 };
 
 const files = {
     scssPath: 'app/scss/**/*.scss',
+    cssPath: 'app/css/**/*.css',
     jsPath: 'app/js/**/*.js',
+    tsPath: 'app/ts/**/*.ts',
     htmlPath: 'app/*.html',
     imgPath: 'app/images/*.*',
     fontsPath: 'app/fonts/*.*',
@@ -40,6 +45,18 @@ function scssTask(done) {
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(sourcemaps.write('.'))
         .pipe(dest('app/css'));
+    done();
+}
+
+function tsTask(done) {
+    return src(files.tsPath)
+        .pipe(
+            ts({
+                noImplicitAny: true,
+                outFile: 'tscompiled.js',
+            })
+        )
+        .pipe(dest(paths.js));
     done();
 }
 
@@ -74,11 +91,11 @@ function cssBuild(done) {
 
 function javascriptBuild(done) {
     return browserify({
-        entries: [`${paths.source}/js/script.js`],
+        entries: [`${paths.source}/js/*.js`],
         transform: [babelify.configure({ presets: ['@babel/preset-env'] })],
     })
         .bundle()
-        .pipe(source('script.js'))
+        .pipe(source('*.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(dest(`${paths.build}/js`));
@@ -112,14 +129,18 @@ function serve(done) {
 }
 
 function watchTask() {
+    watch([files.scssPath], series(parallel(scssTask, reload)));
+    watch([files.tsPath], series(parallel(tsTask, reload)));
     watch(
-        [files.scssPath, files.htmlPath, files.jsPath, files.imgPath],
-        series(parallel(scssTask, jsLinter, reload))
+        [files.htmlPath, files.jsPath, files.imgPath],
+        series(parallel(reload))
     );
+    watch([files.jsPath], series(parallel(jsLinter, reload)));
 }
 
 exports.default = series(parallel(scssTask, serve), watchTask);
 exports.build = parallel(
+    jsLinter,
     javascriptBuild,
     htmlBuild,
     cssBuild,
