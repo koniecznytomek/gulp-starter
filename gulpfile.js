@@ -1,34 +1,37 @@
-var gulp = require("gulp");
-var sass = require("gulp-sass");
-var browserSync = require("browser-sync").create();
+const { src, dest, watch, series, parallel } = require('gulp');
+const sass = require('gulp-sass');
+const browserSync = require('browser-sync').create();
 
-gulp.task("sass", function () {
-  return gulp
-    .src("app/scss/**/*.scss") // Gets all files ending with .scss in app/scss
-    .pipe(sass())
-    .pipe(gulp.dest("app/css"))
-    .pipe(
-      browserSync.reload({
-        stream: true,
-      })
-    );
-});
+const server = browserSync;
 
-gulp.task("browserSync", function () {
-  browserSync.init({
-    server: {
-      baseDir: "./app",
-    },
-  });
-});
+const files = {
+    scssPath: 'app/scss/**/*.scss',
+    jsPath: 'app/js/**/*.js',
+    htmlPath: 'app/*.html',
+};
 
-gulp.task(
-  "watch",
-  gulp.parallel("sass", "browserSync", function () {
-    gulp.watch("app/scss/**/*.scss", gulp.series("sass"));
+function scssTask() {
+    return src(files.scssPath)
+        .pipe(sass())
+        .pipe(dest('app/css'));
+}
 
+function reload(done) {
+    server.reload();
+    done();
+}
 
-    gulp.watch("app/*.html").on("change", browserSync.reload);
-    gulp.watch("app/scss/**/*.scss").on("change", browserSync.reload);
-  })
-);
+function serve(done) {
+    server.init({
+        server: {
+            baseDir: './app',
+        },
+    });
+    done();
+}
+
+function watchTask() {
+    watch([files.scssPath, files.htmlPath, files.jsPath], series(parallel(scssTask, reload)));
+}
+
+exports.default = series(parallel(scssTask, serve), watchTask);

@@ -1,5 +1,6 @@
-# **To start watching**
 
-`gulp watch`
+##To start watching
+
+`gulp`
 
 
