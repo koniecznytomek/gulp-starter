@@ -1,0 +1,17 @@
+$breakpoints: (
+    'XS': 340px,
+    'S': 767px,
+    'M': 992px,
+    'L': 1200px,
+) !default;
+
+$white: #fff;
+$black: #1e1e1e;
+
+
+// Font size fluid options
+
+$min_width: 320px;
+$max_width: 2200px;
+$min_font: 18px;
+$max_font: 74px;

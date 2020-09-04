@@ -1,0 +1,3 @@
+h1 {
+  @include font-size-fluid($min_width, $max_width, $min_font, $max_font);
+}
