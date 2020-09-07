@@ -1,2 +1,2 @@
-h1{font-size:18px}@media screen and (min-width:320px){h1{font-size:calc(18px + 56*(100vw - 320px)/1880)}}@media screen and (min-width:2200px){h1{font-size:74px}}body{background:#fff}.testing{color:#fff}
+@font-face{font-family:f37;src:url(fonts/f37.woff2) format("woff"),url(fonts/f37.woff) format("woff"),url(fonts/f37.ttf) format("truetype");font-weight:400;font-style:normal}h1{font-family:f37,sans-serif;font-size:18px}@media screen and (min-width:320px){h1{font-size:calc(18px + 56*(100vw - 320px)/1880)}}@media screen and (min-width:2200px){h1{font-size:74px}}body{background:#fff}.testing{color:#fff}
 /*# sourceMappingURL=styles.min.css.map */
